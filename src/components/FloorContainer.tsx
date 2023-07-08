@@ -1,116 +1,79 @@
 import React from "react";
 import { useDrag } from "react-use-gesture";
-import styled, { keyframes } from "styled-components";
-
-const X_ROTATION = 30;
-const Y_ROTATION = 30;
-
-const fadeIn = keyframes`
-  0%   {
-    visibility: hidden;
-    opacity: 0;
-  }
-  25%   {
-    visibility: hidden;
-    opacity: 0;
-  }
-  100% {
-    visibility: visible;
-    opacity: 1;
-  }
-`;
-
-const flipCard = keyframes`
-  0%   {    
-    transform: rotateY(${Y_ROTATION});
-    filter: drop-shadow(25px 25px 20px #000);
-    background-color: white;}
-  100%  {    
-    transform: rotateY(180deg);
-    filter: drop-shadow(-25px 25px 20px #000);
-    background-color: black;}
-`;
-
-const unflipCard = keyframes`
-  0%  {    
-  transform: rotateY(180deg);
-  filter: drop-shadow(-25px 25px 20px #000);
-  background-color: black;}
-  100%   {    
-    transform: rotateY(${Y_ROTATION});
-    filter: drop-shadow(25px 25px 20px #000);
-    background-color: white;}
-`;
+import styled from "styled-components";
+import { BLACK, OFFWHITE, X_ROTATION, Y_ROTATION } from "../utils/constants";
+import Card from "./CardItem";
+import CardItem from "./CardItem";
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   perspective: 1000px;
+  background-color: ${OFFWHITE};
 `;
 
 const Floor = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
   padding: 20px;
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 600px;
-  height: 1200px;
+  top: 10vh;
+  left: 10vw;
+  width: 1200px;
+  height: 600px;
   perspective: 1000px;
+  background-color: ${OFFWHITE};
   background-image: radial-gradient(
       circle at center,
-      black 0.25rem,
+      ${BLACK} 0.25rem,
       transparent 0
     ),
-    radial-gradient(circle at center, black 0.25rem, transparent 0);
+    radial-gradient(circle at center, ${BLACK} 0.25rem, transparent 0);
   background-size: 1.3rem 1.3rem;
   background-position: 0 0, 0.65rem 0.65rem;
 `;
 
-const Card = styled.div`
-  transform: translateZ(10px);
-  filter: drop-shadow(25px 25px 20px #000);
-  width: 100px;
-  height: 200px;
-  padding: 5px;
-  border-radius: 10px;
-  border: 3px solid black;
-  background-color: white;
-  background-image: radial-gradient(
-      circle at center,
-      black 0.1rem,
-      transparent 0
-    ),
-    radial-gradient(circle at center, black 0.1rem, transparent 0);
-  background-size: 1rem 1rem;
-  background-position: 0 0, 0.5rem 0.5rem;
-  animation: ${unflipCard} 0.25s;
-  animation-fill-mode: forwards;
-`;
+let tarotCards = [
+  { numeral: "I", name: "The Magician" },
+  { numeral: "II", name: "The High Priestess" },
+  { numeral: "III", name: "The Empress" },
+  { numeral: "IV", name: "The Emperor" },
+  { numeral: "V", name: "The Hierophant" },
+  { numeral: "VI", name: "The Lovers" },
+  { numeral: "VII", name: "The Chariot" },
+  { numeral: "VIII", name: "Strength" },
+  { numeral: "IX", name: "The Hermit" },
+  { numeral: "X", name: "Wheel of Fortune" },
+  { numeral: "XI", name: "Justice" },
+  { numeral: "XII", name: "The Hanged Man" },
+  { numeral: "XIII", name: "Death" },
+  { numeral: "XIV", name: "Temperance" },
+  { numeral: "XV", name: "The Devil" },
+  { numeral: "XVI", name: "The Tower" },
+  { numeral: "XVII", name: "The Star" },
+  { numeral: "XVIII", name: "The Moon" },
+  { numeral: "XIX", name: "The Sun" },
+  { numeral: "XX", name: "Judgement" },
+  { numeral: "XXI", name: "The World" },
+  { numeral: "XXII", name: "The Fool" },
+];
 
-const CardChild = styled.div`
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  background-color: pink;
-  border-radius: 5px;
-`;
+function shuffleArray<T>(array: T[]): T[] {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
 
-const CardHolder = styled.div`
-  width: fit-content;
-  height: fit-content;
-  &:hover ${Card} {
-    animation: ${flipCard} 0.25s;
-    animation-fill-mode: forwards;
-  }
-  &:hover ${Card} ${CardChild} {
-    animation: ${fadeIn} 2s;
-    animation-fill-mode: forwards;
-  }
-`;
+const shuffledTarotCards = shuffleArray<{ numeral: string; name: string }>(
+  tarotCards
+);
+const selectedCards = shuffledTarotCards.slice(0, 3);
 
 type State = {
   x: number;
@@ -145,11 +108,9 @@ const FloorContainer = () => {
           transform: `rotateX(${x}deg) rotateZ(${y}deg) translateX(${dx}px) translateY(${dy}px)`,
         }}
       >
-        <CardHolder>
-          <Card>
-            <CardChild />
-          </Card>
-        </CardHolder>
+        {selectedCards.map((card) => (
+          <CardItem key={card.name} numeral={card.numeral} text={card.name} />
+        ))}
       </Floor>
     </Container>
   );

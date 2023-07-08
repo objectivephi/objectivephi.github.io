@@ -1,3 +1,8 @@
-export const BLACK = "212529";
-export const WHITE = "#DEE2E6";
-export const GREY = "#6C757C";
+//rotations
+export const X_ROTATION = 30;
+export const Y_ROTATION = 30;
+
+//colors
+export const BLACK = "#090909";
+export const OFFWHITE = "#CBCBCB";
+export const WHITE = "#E5E5E5";
