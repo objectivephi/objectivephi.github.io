@@ -6,22 +6,22 @@ import Beethoven from "./Beethoven";
 const inspect = keyframes`
   0%   {
     transform: rotateZ(0deg) translateZ(0px);
-    z-index: 1;
+    z-index: 2;
   }
   100% {
     transform: rotateZ(-30deg) translateZ(600px);
-    z-index: 2; 
+    z-index: 3; 
   }
 `;
 
 const uninspect = keyframes`
   0%   {
     transform: rotateZ(-30deg) translateZ(600px);
-    z-index: 2;
+    z-index: 3;
   }
   100% {
     transform: rotateZ(0deg) translateZ(0px);
-    z-index: 1; 
+    z-index: 2; 
   }
 `;
 
@@ -126,7 +126,6 @@ const CardHolder = styled.div<CardHolderProps>`
   width: fit-content;
   height: fit-content;
   margin: 40px;
-  z-index: 1;
   border-radius: 10px;
 
   animation: ${uninspect} 0.5s;
@@ -137,7 +136,7 @@ const CardHolder = styled.div<CardHolderProps>`
       ? css`
           animation: ${inspect} 0.5s;
           animation-fill-mode: forwards;
-
+          z-index: 3;
           ${Card} {
             box-shadow: 20px 50px 0px 30px rgba(0, 0, 0, 0.3) !important;
           }

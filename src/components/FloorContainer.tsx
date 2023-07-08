@@ -40,8 +40,8 @@ const Floor = styled.div`
   gap: 20px;
   padding: 50px;
   position: absolute;
-  top: 15vh;
-  left: 25vw;
+  top: 0;
+  left: 15vw;
   width: 800px;
   height: 600px;
   perspective: 1000px;
@@ -57,6 +57,7 @@ const Floor = styled.div`
 `;
 
 const CardContainer = styled.div`
+  z-index: 2;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -65,6 +66,7 @@ const CardContainer = styled.div`
 `;
 
 const ShuffleButton = styled.button`
+  z-index: 1;
   margin: 100px 0 0 0;
   box-sizing: border-box;
   width: 150px;
@@ -85,8 +87,7 @@ const ShuffleButton = styled.button`
   }
 
   &:active {
-    transform: translateY(0px);
-    transform: translateX(5px);
+    transform: translateY(0px) translateX(5px);
     box-shadow: 0px 0px 0px 2px #000;
   }
 `;
