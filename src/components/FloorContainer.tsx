@@ -1,7 +1,13 @@
 import React from "react";
 import { useDrag } from "react-use-gesture";
 import styled from "styled-components";
-import { BLACK, OFFWHITE, X_ROTATION, Y_ROTATION } from "../utils/constants";
+import {
+  BLACK,
+  GREY,
+  OFFWHITE,
+  X_ROTATION,
+  Y_ROTATION,
+} from "../utils/constants";
 import Card from "./CardItem";
 import CardItem from "./CardItem";
 
@@ -11,19 +17,31 @@ const Container = styled.div`
   overflow: hidden;
   perspective: 1000px;
   background-color: ${OFFWHITE};
+  background-image: radial-gradient(
+      circle at center,
+      ${GREY} 0.1rem,
+      transparent 0
+    ),
+    radial-gradient(circle at center, ${GREY} 0.1rem, transparent 0);
+  background-size: 2rem 2rem;
+  background-position: 0 0, 2rem 2rem;
 `;
 
 const Floor = styled.div`
+  box-shadow: 30px 30px 0px #000;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: 3px solid ${BLACK};
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  padding: 20px;
+  padding: 100px;
   position: absolute;
-  top: 10vh;
-  left: 10vw;
-  width: 1200px;
-  height: 600px;
+  top: 0;
+  left: 0;
+  width: 800px;
+  height: 400px;
   perspective: 1000px;
   background-color: ${OFFWHITE};
   background-image: radial-gradient(
@@ -36,7 +54,13 @@ const Floor = styled.div`
   background-position: 0 0, 0.65rem 0.65rem;
 `;
 
-let tarotCards = [
+type TarotCard = {
+  numeral: string;
+  name: string;
+  flipped?: boolean;
+};
+
+let tarotCards: TarotCard[] = [
   { numeral: "I", name: "The Magician" },
   { numeral: "II", name: "The High Priestess" },
   { numeral: "III", name: "The Empress" },
@@ -70,9 +94,11 @@ function shuffleArray<T>(array: T[]): T[] {
   return newArray;
 }
 
-const shuffledTarotCards = shuffleArray<{ numeral: string; name: string }>(
-  tarotCards
-);
+const shuffledTarotCards = shuffleArray(tarotCards).map((card) => ({
+  ...card,
+  flipped: Math.random() < 0.1,
+}));
+
 const selectedCards = shuffledTarotCards.slice(0, 3);
 
 type State = {
@@ -83,12 +109,22 @@ type State = {
 };
 
 const FloorContainer = () => {
+  const [cards, setCards] = React.useState<TarotCard[]>(selectedCards);
   const [{ x, y, dx, dy }, set] = React.useState<State>({
     x: X_ROTATION,
     y: Y_ROTATION,
     dx: 0,
     dy: 0,
   });
+
+  const generateNewCards = () => {
+    const shuffledCards = shuffleArray(tarotCards).map((card) => ({
+      ...card,
+      flipped: Math.random() < 0.2,
+    }));
+    const newSelectedCards = shuffledCards.slice(0, 3);
+    setCards(newSelectedCards);
+  };
 
   const bind = useDrag(({ down, delta: [dx, dy] }) => {
     if (down) {
@@ -109,7 +145,12 @@ const FloorContainer = () => {
         }}
       >
         {selectedCards.map((card) => (
-          <CardItem key={card.name} numeral={card.numeral} text={card.name} />
+          <CardItem
+            key={card.name}
+            numeral={card.numeral}
+            text={card.name}
+            flipped={card.flipped}
+          />
         ))}
       </Floor>
     </Container>

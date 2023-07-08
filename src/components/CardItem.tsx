@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { BLACK, OFFWHITE, WHITE, Y_ROTATION } from "../utils/constants";
+import Beethoven from "./Beethoven";
 
 const inspect = keyframes`
   0%   {
@@ -42,32 +43,34 @@ const fadeIn = keyframes`
 const flipCard = keyframes`
   0%   {    
     transform: rotateY(180deg);
-    filter: drop-shadow(-25px 25px 20px #000);
+    box-shadow: -15px 15px 0px #000;
     background-color: ${OFFWHITE};}
   100%  {    
     transform: rotateY(${Y_ROTATION});
-    filter: drop-shadow(25px 25px 20px #000);
-    background-color: ${BLACK} ;}
+    box-shadow: 15px 15px 0px #000;
+    background-color: ${BLACK};}
 `;
 
 const unflipCard = keyframes`
   0%  {    
-  transform: rotateY(180deg);
-  filter: drop-shadow(-25px 25px 20px #000);
-  background-color: ${BLACK} ;}
+    transform: rotateY(180deg);
+    box-shadow: -15px 15px 0px #000;
+    background-color: ${BLACK};}
   100%   {    
     transform: rotateY(${Y_ROTATION});
-    filter: drop-shadow(25px 25px 20px #000);
+    box-shadow: 15px 15px 0px #000;
     background-color: ${OFFWHITE};}
 `;
 
 const Card = styled.div`
   transform: translateZ(10px);
-  filter: drop-shadow(25px 25px 20px #000);
   width: 100px;
   height: 200px;
+  overflow: hidden;
   border-radius: 10px;
+  box-sizing: border-box;
   border: 3px solid ${BLACK};
+
   background-image: radial-gradient(
       circle at center,
       ${BLACK} 0.1rem,
@@ -80,7 +83,11 @@ const Card = styled.div`
   animation-fill-mode: forwards;
 `;
 
-const CardChild = styled.div`
+interface CardChildProps {
+  flipped: boolean;
+}
+
+const CardChild = styled.div<CardChildProps>`
   width: 100%;
   height: 100%;
   opacity: 0;
@@ -89,13 +96,23 @@ const CardChild = styled.div`
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+
+  ${(props) =>
+    props.flipped
+      ? css`
+          transform: rotateZ(180deg);
+        `
+      : css`
+          transform: rotateZ(0deg);
+        `}
 `;
 
 const CardContent = styled.pre`
   box-sizing: border-box;
   color: ${WHITE};
   width: 100%;
-  padding: 5px;
+  padding: 25px 25px 0 5px;
+  margin: 0;
   font-size: 10px;
   white-space: pre-wrap;
 `;
@@ -110,6 +127,7 @@ const CardHolder = styled.div<CardHolderProps>`
   height: fit-content;
   margin: 40px;
   z-index: 1;
+  border-radius: 10px;
 
   animation: ${uninspect} 0.5s;
   animation-fill-mode: forwards;
@@ -119,6 +137,10 @@ const CardHolder = styled.div<CardHolderProps>`
       ? css`
           animation: ${inspect} 0.5s;
           animation-fill-mode: forwards;
+
+          ${Card} {
+            box-shadow: 20px 50px 0px 30px rgba(0, 0, 0, 0.3) !important;
+          }
 
           ${CardChild} {
             animation: none;
@@ -138,28 +160,34 @@ const CardHolder = styled.div<CardHolderProps>`
         `}
 `;
 
-const CardSVG = styled.svg`
-  position: absolute;
-  top: 50px;
+const TarotSVG = styled.svg`
   width: 100%;
   height: 100%;
+  padding-left: 5px;
 `;
 
-const CardNumeral = styled.text`
-  font-size: 100px;
+const TarotNumeral = styled.text`
+  font-size: 60px;
   font-family: monospace;
   stroke: ${WHITE};
   stroke-width: 1;
-  fill: none;
+  fill: ${WHITE};
+`;
+
+const BeethovenHolder = styled.div`
+  position: absolute;
+  bottom: -2%;
+  right: -2%;
 `;
 
 interface CardItemProps {
   key: string;
   numeral: string;
   text: string;
+  flipped: boolean;
 }
 
-const CardItem = ({ numeral, text }: CardItemProps) => {
+const CardItem = ({ numeral, text, flipped }: CardItemProps) => {
   const [selected, setSelected] = useState(false);
 
   const handleClick = (event: { button: number }) => {
@@ -171,28 +199,16 @@ const CardItem = ({ numeral, text }: CardItemProps) => {
   return (
     <CardHolder selected={selected} onMouseDown={handleClick}>
       <Card>
-        <CardChild>
+        <CardChild flipped={flipped}>
           <CardContent>{text}</CardContent>
-          <CardSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 100">
-            <CardNumeral
-              x="70%"
-              y="60%"
-              dominantBaseline="middle"
-              textAnchor="middle"
-            >
+          <TarotSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 100">
+            <TarotNumeral x="0" y="-20%" textAnchor="start">
               {numeral}
-            </CardNumeral>
-          </CardSVG>
-          <CardSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 100">
-            <CardNumeral
-              x="75%"
-              y="65%"
-              dominantBaseline="middle"
-              textAnchor="middle"
-            >
-              {numeral}
-            </CardNumeral>
-          </CardSVG>
+            </TarotNumeral>
+          </TarotSVG>
+          <BeethovenHolder>
+            <Beethoven />
+          </BeethovenHolder>
         </CardChild>
       </Card>
     </CardHolder>
