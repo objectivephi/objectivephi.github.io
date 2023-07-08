@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { BLACK, OFFWHITE, WHITE, Y_ROTATION } from "../utils/constants";
 import Beethoven from "./Beethoven";
@@ -220,11 +220,14 @@ interface CardItemProps {
 const CardItem = ({ numeral, text, flipped }: CardItemProps) => {
   const [selected, setSelected] = useState(false);
 
-  const handleClick = (event: { button: number }) => {
-    if (event.button === 0) {
-      setSelected(!selected);
-    }
-  };
+  const handleClick = useCallback(
+    (event: { button: number }) => {
+      if (event.button === 0) {
+        setSelected(!selected);
+      }
+    },
+    [selected]
+  );
 
   return (
     <CardHolder selected={selected} onMouseDown={handleClick}>

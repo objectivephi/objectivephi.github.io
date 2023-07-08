@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useDrag } from "react-use-gesture";
 import styled from "styled-components";
 import {
@@ -170,15 +170,14 @@ const FloorContainer = () => {
     dy: 0,
   });
 
-  const generateNewCards = () => {
-    const shuffledCards = shuffleArray(tarotCards).map((card) => ({
+  const generateNewCards = useCallback(() => {
+    const shuffledCards = shuffleArray(tarotCards.slice(0, 3)).map((card) => ({
       ...card,
       flipped: Math.random() < 0.2,
     }));
     setKeyId(keyId + 1);
-    const newSelectedCards = shuffledCards.slice(0, 3);
-    setCards(newSelectedCards);
-  };
+    setCards(shuffledCards);
+  }, [keyId]);
 
   const bind = useDrag(({ down, delta: [dx, dy] }) => {
     if (down) {
