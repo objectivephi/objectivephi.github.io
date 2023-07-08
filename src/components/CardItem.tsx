@@ -131,14 +131,22 @@ const CardHolder = styled.div<CardHolderProps>`
   animation: ${uninspect} 0.5s;
   animation-fill-mode: forwards;
 
+  @media (max-width: 480px) {
+    margin: 30px;
+  }
+
   ${(props) =>
     props.selected
       ? css`
-          animation: ${inspect} 0.5s;
-          animation-fill-mode: forwards;
           z-index: 3;
-          ${Card} {
-            box-shadow: 20px 50px 0px 30px rgba(0, 0, 0, 0.3) !important;
+
+          @media (min-width: 481px) {
+            animation: ${inspect} 0.5s;
+            animation-fill-mode: forwards;
+
+            ${Card} {
+              box-shadow: 20px 50px 0px 30px rgba(0, 0, 0, 0.3) !important;
+            }
           }
 
           ${CardChild} {

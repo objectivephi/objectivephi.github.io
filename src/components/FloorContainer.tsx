@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useDrag } from "react-use-gesture";
 import styled from "styled-components";
 import {
@@ -28,6 +28,10 @@ const Container = styled.div`
     radial-gradient(circle at center, ${GREY} 0.1rem, transparent 0);
   background-size: 2rem 2rem;
   background-position: 0 0, 2rem 2rem;
+
+  @media (max-width: 480px) {
+    perspective: none;
+  }
 `;
 
 const Floor = styled.div`
@@ -53,6 +57,10 @@ const Floor = styled.div`
     radial-gradient(circle at center, ${BLACK} 0.25rem, transparent 0);
   background-size: 1.3rem 1.3rem;
   background-position: 0 0, 0.65rem 0.65rem;
+
+  @media (max-width: 480px) {
+    perspective: none;
+  }
 `;
 
 const CardContainer = styled.div`
@@ -62,6 +70,10 @@ const CardContainer = styled.div`
   justify-content: center;
   align-items: center;
   perspective: 1000px;
+
+  @media (max-width: 480px) {
+    perspective: none;
+  }
 `;
 
 const ShuffleButton = styled.button`
@@ -175,13 +187,19 @@ const FloorContainer = () => {
     }
   });
 
+  const floorStyle = useMemo(() => {
+    if (window.innerWidth > 480) {
+      return {
+        transform: `rotateX(${x}deg) rotateZ(${y}deg) translateX(${dx}px) translateY(${dy}px)`,
+      };
+    } else {
+      return {};
+    }
+  }, [x, y, dx, dy]);
+
   return (
     <Container {...bind()}>
-      <Floor
-        style={{
-          transform: `rotateX(${x}deg) rotateZ(${y}deg) translateX(${dx}px) translateY(${dy}px)`,
-        }}
-      >
+      <Floor style={floorStyle}>
         <CardContainer>
           {cards.map((card) => (
             <CardItem
