@@ -289,6 +289,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   }
 `,wm=$e.button`
   z-index: 1;
+  user-select: none;
   margin: 100px 0 0 0;
   box-sizing: border-box;
   width: 150px;
