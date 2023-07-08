@@ -1,4 +1,3 @@
-import React from "react";
 import FloorContainer from "./components/FloorContainer";
 
 const App = () => {

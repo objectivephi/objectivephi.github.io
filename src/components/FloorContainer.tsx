@@ -9,7 +9,6 @@ import {
   X_ROTATION,
   Y_ROTATION,
 } from "../utils/constants";
-import Card from "./CardItem";
 import CardItem from "./CardItem";
 
 const Container = styled.div`

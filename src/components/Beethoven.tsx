@@ -1,4 +1,3 @@
-import React from "react";
 import { WHITE } from "../utils/constants";
 import styled, { css, keyframes } from "styled-components";
 

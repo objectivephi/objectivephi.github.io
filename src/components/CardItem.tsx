@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { BLACK, OFFWHITE, WHITE, Y_ROTATION } from "../utils/constants";
 import Beethoven from "./Beethoven";
