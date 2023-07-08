@@ -80,6 +80,7 @@ const CardContainer = styled.div`
 
 const ShuffleButton = styled.button`
   z-index: 1;
+  user-select: none;
   margin: 100px 0 0 0;
   box-sizing: border-box;
   width: 150px;
