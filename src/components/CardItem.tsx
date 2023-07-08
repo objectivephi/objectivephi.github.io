@@ -132,7 +132,7 @@ const CardHolder = styled.div<CardHolderProps>`
   animation-fill-mode: forwards;
 
   @media (max-width: 480px) {
-    margin: 30px;
+    margin: 10px;
   }
 
   ${(props) =>
@@ -149,6 +149,18 @@ const CardHolder = styled.div<CardHolderProps>`
             }
           }
 
+          @media (max-width: 480px) {
+            ${Card} {
+              animation: ${flipCard} 0.25s;
+              animation-fill-mode: forwards;
+            }
+
+            ${Card} ${CardChild} {
+              animation: ${fadeIn} 1.25s;
+              animation-fill-mode: forwards;
+            }
+          }
+
           ${CardChild} {
             animation: none;
             visibility: visible;
@@ -156,14 +168,24 @@ const CardHolder = styled.div<CardHolderProps>`
           }
         `
       : css`
-          &:hover ${Card} {
-            animation: ${flipCard} 0.25s;
-            animation-fill-mode: forwards;
+          @media (min-width: 481px) {
+            &:hover ${Card} {
+              animation: ${flipCard} 0.25s;
+              animation-fill-mode: forwards;
+            }
+
+            &:hover ${Card} ${CardChild} {
+              animation: ${fadeIn} 1.25s;
+              animation-fill-mode: forwards;
+            }
           }
 
-          &:hover ${Card} ${CardChild} {
-            animation: ${fadeIn} 1.25s;
-            animation-fill-mode: forwards;
+          @media (max-width: 480px) {
+            ${CardChild} {
+              animation: none;
+              visibility: none;
+              opacity: 0;
+            }
           }
         `}
 `;
@@ -175,7 +197,7 @@ const TarotSVG = styled.svg`
 `;
 
 const TarotNumeral = styled.text`
-  font-size: 60px;
+  font-size: 50px;
   font-family: monospace;
   stroke: ${WHITE};
   stroke-width: 1;

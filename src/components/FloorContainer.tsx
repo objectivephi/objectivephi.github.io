@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useDrag } from "react-use-gesture";
 import styled from "styled-components";
 import {
@@ -19,6 +19,8 @@ const Container = styled.div`
   height: 100vh;
   overflow: hidden;
   perspective: 1000px;
+  overflow: hidden;
+
   background-color: ${OFFWHITE};
   background-image: radial-gradient(
       circle at center,
@@ -159,8 +161,9 @@ type State = {
 };
 
 const FloorContainer = () => {
-  const [cards, setCards] = React.useState<TarotCard[]>(selectedCards);
-  const [{ x, y, dx, dy }, set] = React.useState<State>({
+  const [cards, setCards] = useState<TarotCard[]>(selectedCards);
+  const [keyId, setKeyId] = useState(0);
+  const [{ x, y, dx, dy }, set] = useState<State>({
     x: X_ROTATION,
     y: Y_ROTATION,
     dx: 0,
@@ -172,6 +175,7 @@ const FloorContainer = () => {
       ...card,
       flipped: Math.random() < 0.2,
     }));
+    setKeyId(keyId + 1);
     const newSelectedCards = shuffledCards.slice(0, 3);
     setCards(newSelectedCards);
   };
@@ -200,7 +204,7 @@ const FloorContainer = () => {
   return (
     <Container {...bind()}>
       <Floor style={floorStyle}>
-        <CardContainer>
+        <CardContainer key={keyId}>
           {cards.map((card) => (
             <CardItem
               key={card.name}
