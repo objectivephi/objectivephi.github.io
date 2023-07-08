@@ -70,6 +70,7 @@ const ShuffleButton = styled.button`
   box-sizing: border-box;
   width: 150px;
   height: 75px;
+  color: ${BLACK};
   border: 3px solid ${BLACK};
   border-radius: 5px;
   box-shadow: 5px 5px 0px 2px #000;
