@@ -5,6 +5,7 @@ import {
   BLACK,
   GREY,
   OFFWHITE,
+  WHITE,
   X_ROTATION,
   Y_ROTATION,
 } from "../utils/constants";
@@ -33,15 +34,16 @@ const Floor = styled.div`
   box-sizing: border-box;
   border: 3px solid ${BLACK};
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  padding: 100px;
+  padding: 50px;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 15vh;
+  left: 25vw;
   width: 800px;
-  height: 400px;
+  height: 600px;
   perspective: 1000px;
   background-color: ${OFFWHITE};
   background-image: radial-gradient(
@@ -52,6 +54,41 @@ const Floor = styled.div`
     radial-gradient(circle at center, ${BLACK} 0.25rem, transparent 0);
   background-size: 1.3rem 1.3rem;
   background-position: 0 0, 0.65rem 0.65rem;
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+`;
+
+const ShuffleButton = styled.button`
+  margin: 100px 0 0 0;
+  box-sizing: border-box;
+  width: 150px;
+  height: 75px;
+  border: 3px solid ${BLACK};
+  border-radius: 5px;
+  box-shadow: 5px 5px 0px 2px #000;
+  background-color: ${OFFWHITE};
+  font-family: monospace;
+  font-size: 20px;
+  transform: translateY(-5px);
+
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: ${WHITE};
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: translateY(0px);
+    transform: translateX(5px);
+    box-shadow: 0px 0px 0px 2px #000;
+  }
 `;
 
 type TarotCard = {
@@ -144,14 +181,17 @@ const FloorContainer = () => {
           transform: `rotateX(${x}deg) rotateZ(${y}deg) translateX(${dx}px) translateY(${dy}px)`,
         }}
       >
-        {selectedCards.map((card) => (
-          <CardItem
-            key={card.name}
-            numeral={card.numeral}
-            text={card.name}
-            flipped={card.flipped}
-          />
-        ))}
+        <CardContainer>
+          {cards.map((card) => (
+            <CardItem
+              key={card.name}
+              numeral={card.numeral}
+              text={card.name}
+              flipped={card.flipped}
+            />
+          ))}
+        </CardContainer>
+        <ShuffleButton onClick={generateNewCards}>Shuffle</ShuffleButton>
       </Floor>
     </Container>
   );

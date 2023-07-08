@@ -84,7 +84,7 @@ const Card = styled.div`
 `;
 
 interface CardChildProps {
-  flipped: boolean;
+  flipped?: boolean;
 }
 
 const CardChild = styled.div<CardChildProps>`
@@ -153,6 +153,7 @@ const CardHolder = styled.div<CardHolderProps>`
             animation: ${flipCard} 0.25s;
             animation-fill-mode: forwards;
           }
+
           &:hover ${Card} ${CardChild} {
             animation: ${fadeIn} 1.25s;
             animation-fill-mode: forwards;
@@ -184,7 +185,7 @@ interface CardItemProps {
   key: string;
   numeral: string;
   text: string;
-  flipped: boolean;
+  flipped?: boolean;
 }
 
 const CardItem = ({ numeral, text, flipped }: CardItemProps) => {
