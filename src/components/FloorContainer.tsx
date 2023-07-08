@@ -12,6 +12,9 @@ import {
 import CardItem from "./CardItem";
 
 const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -38,9 +41,6 @@ const Floor = styled.div`
   align-items: center;
   gap: 20px;
   padding: 50px;
-  position: absolute;
-  top: 0;
-  left: 15vw;
   width: 800px;
   height: 600px;
   perspective: 1000px;
