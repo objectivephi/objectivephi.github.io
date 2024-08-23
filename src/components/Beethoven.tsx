@@ -93,9 +93,9 @@ const rotate = keyframes`
   }
 `;
 
-const getAnimation = (index: number) => {
-  let factor = (5 / (paths.length / (index + 2))).toFixed(2);
-  return factor;
+const getAnimationDuration = (index: number) => {
+  let factor = 5 / (paths.length / (index + 2));
+  return `${factor}s`;
 };
 
 const BeethovenSVG = styled.svg`
@@ -103,7 +103,7 @@ const BeethovenSVG = styled.svg`
     ${Array.from({ length: paths.length }).map(
       (_, index) => css`
         &:nth-child(${index + 1}) {
-          animation: ${rotate} ${getAnimation(index)}s linear infinite;
+          animation: ${rotate} ${getAnimationDuration(index)} linear infinite;
           transform-origin: right bottom;
         }
       `
@@ -120,5 +120,4 @@ const Beethoven = () => {
     </BeethovenSVG>
   );
 };
-
 export default Beethoven;

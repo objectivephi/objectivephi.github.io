@@ -3,34 +3,31 @@ import styled, { css, keyframes } from "styled-components";
 import { BLACK, OFFWHITE, WHITE, Y_ROTATION } from "../utils/constants";
 import Beethoven from "./Beethoven";
 
+// Keyframe Animations
 const inspect = keyframes`
-  0%   {
+  0% {
     transform: rotateZ(0deg) translateZ(0px);
     z-index: 2;
   }
   100% {
     transform: rotateZ(-30deg) translateZ(600px);
-    z-index: 3; 
+    z-index: 3;
   }
 `;
 
 const uninspect = keyframes`
-  0%   {
+  0% {
     transform: rotateZ(-30deg) translateZ(600px);
     z-index: 3;
   }
   100% {
     transform: rotateZ(0deg) translateZ(0px);
-    z-index: 2; 
+    z-index: 2;
   }
 `;
 
 const fadeIn = keyframes`
-  0%   {
-    visibility: hidden;
-    opacity: 0;
-  }
-  40%   {
+  0%, 40% {
     visibility: hidden;
     opacity: 0;
   }
@@ -41,27 +38,32 @@ const fadeIn = keyframes`
 `;
 
 const flipCard = keyframes`
-  0%   {    
+  0% {
     transform: rotateY(180deg);
     box-shadow: -15px 15px 0px #000;
-    background-color: ${OFFWHITE};}
-  100%  {    
-    transform: rotateY(${Y_ROTATION});
+    background-color: ${OFFWHITE};
+  }
+  100% {
+    transform: rotateY(${Y_ROTATION}deg);
     box-shadow: 15px 15px 0px #000;
-    background-color: ${BLACK};}
+    background-color: ${BLACK};
+  }
 `;
 
 const unflipCard = keyframes`
-  0%  {    
-    transform: rotateY(180deg);
+  0% {
+    transform: rotateY(${Y_ROTATION}deg);
     box-shadow: -15px 15px 0px #000;
-    background-color: ${BLACK};}
-  100%   {    
-    transform: rotateY(${Y_ROTATION});
+    background-color: ${BLACK};
+  }
+  100% {
+    transform: rotateY(0deg);
     box-shadow: 15px 15px 0px #000;
-    background-color: ${OFFWHITE};}
+    background-color: ${OFFWHITE};
+  }
 `;
 
+// Styled Components
 const Card = styled.div`
   transform: translateZ(10px);
   width: 100px;
@@ -70,7 +72,6 @@ const Card = styled.div`
   border-radius: 10px;
   box-sizing: border-box;
   border: 3px solid ${BLACK};
-
   background-image: radial-gradient(
       circle at center,
       ${BLACK} 0.1rem,
@@ -84,26 +85,25 @@ const Card = styled.div`
 `;
 
 interface CardChildProps {
-  flipped?: boolean;
+  $flipped?: boolean;
 }
 
 const CardChild = styled.div<CardChildProps>`
   width: 100%;
   height: 100%;
   opacity: 0;
-
   background-color: ${BLACK};
   border-radius: 5px;
   display: flex;
   flex-direction: column;
 
   ${(props) =>
-    props.flipped
+    props.$flipped
       ? css`
-          transform: rotateZ(180deg);
+          transform: rotateY(180deg);
         `
       : css`
-          transform: rotateZ(0deg);
+          transform: rotateY(0deg);
         `}
 `;
 
@@ -127,7 +127,6 @@ const CardHolder = styled.div<CardHolderProps>`
   height: fit-content;
   margin: 40px;
   border-radius: 10px;
-
   animation: ${uninspect} 0.5s;
   animation-fill-mode: forwards;
 
@@ -183,7 +182,7 @@ const CardHolder = styled.div<CardHolderProps>`
           @media (max-width: 480px) {
             ${CardChild} {
               animation: none;
-              visibility: none;
+              visibility: hidden;
               opacity: 0;
             }
           }
@@ -206,12 +205,16 @@ const TarotNumeral = styled.text`
 
 const BeethovenHolder = styled.div`
   position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
   bottom: -2%;
   right: -2%;
 `;
 
 interface CardItemProps {
-  key: string;
   numeral: string;
   text: string;
   flipped?: boolean;
@@ -232,7 +235,7 @@ const CardItem = ({ numeral, text, flipped }: CardItemProps) => {
   return (
     <CardHolder selected={selected} onMouseDown={handleClick}>
       <Card>
-        <CardChild flipped={flipped}>
+        <CardChild $flipped={flipped}>
           <CardContent>{text}</CardContent>
           <TarotSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 100">
             <TarotNumeral x="0" y="-20%" textAnchor="start">
