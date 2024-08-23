@@ -48,39 +48,35 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   100% {
     transform: rotate(360deg);
   }
-`,im=e=>(5/(da.length/(e+2))).toFixed(2),om=$e.svg`
+`,im=e=>`${5/(da.length/(e+2))}s`,om=$e.svg`
   path {
     ${Array.from({length:da.length}).map((e,t)=>an`
         &:nth-child(${t+1}) {
-          animation: ${rm} ${im(t)}s linear infinite;
+          animation: ${rm} ${im(t)} linear infinite;
           transform-origin: right bottom;
         }
       `)}
   }
 `,lm=()=>b.jsx(om,{xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 670 670",children:da.map((e,t)=>b.jsx("path",{fill:e.fill,d:e.d},t))}),um=Xn`
-  0%   {
+  0% {
     transform: rotateZ(0deg) translateZ(0px);
     z-index: 2;
   }
   100% {
     transform: rotateZ(-30deg) translateZ(600px);
-    z-index: 3; 
+    z-index: 3;
   }
 `,am=Xn`
-  0%   {
+  0% {
     transform: rotateZ(-30deg) translateZ(600px);
     z-index: 3;
   }
   100% {
     transform: rotateZ(0deg) translateZ(0px);
-    z-index: 2; 
+    z-index: 2;
   }
 `,Qs=Xn`
-  0%   {
-    visibility: hidden;
-    opacity: 0;
-  }
-  40%   {
+  0%, 40% {
     visibility: hidden;
     opacity: 0;
   }
@@ -89,23 +85,27 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     opacity: 1;
   }
 `,Ys=Xn`
-  0%   {    
+  0% {
     transform: rotateY(180deg);
     box-shadow: -15px 15px 0px #000;
-    background-color: ${Yr};}
-  100%  {    
-    transform: rotateY(${fa});
+    background-color: ${Yr};
+  }
+  100% {
+    transform: rotateY(${fa}deg);
     box-shadow: 15px 15px 0px #000;
-    background-color: ${Xe};}
+    background-color: ${Xe};
+  }
 `,sm=Xn`
-  0%  {    
-    transform: rotateY(180deg);
+  0% {
+    transform: rotateY(${fa}deg);
     box-shadow: -15px 15px 0px #000;
-    background-color: ${Xe};}
-  100%   {    
-    transform: rotateY(${fa});
+    background-color: ${Xe};
+  }
+  100% {
+    transform: rotateY(0deg);
     box-shadow: 15px 15px 0px #000;
-    background-color: ${Yr};}
+    background-color: ${Yr};
+  }
 `,pn=$e.div`
   transform: translateZ(10px);
   width: 100px;
@@ -114,7 +114,6 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   border-radius: 10px;
   box-sizing: border-box;
   border: 3px solid ${Xe};
-
   background-image: radial-gradient(
       circle at center,
       ${Xe} 0.1rem,
@@ -129,16 +128,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   width: 100%;
   height: 100%;
   opacity: 0;
-
   background-color: ${Xe};
   border-radius: 5px;
   display: flex;
   flex-direction: column;
 
-  ${e=>e.flipped?an`
-          transform: rotateZ(180deg);
+  ${e=>e.$flipped?an`
+          transform: rotateY(180deg);
         `:an`
-          transform: rotateZ(0deg);
+          transform: rotateY(0deg);
         `}
 `,cm=$e.pre`
   box-sizing: border-box;
@@ -154,7 +152,6 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   height: fit-content;
   margin: 40px;
   border-radius: 10px;
-
   animation: ${am} 0.5s;
   animation-fill-mode: forwards;
 
@@ -207,7 +204,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           @media (max-width: 480px) {
             ${cr} {
               animation: none;
-              visibility: none;
+              visibility: hidden;
               opacity: 0;
             }
           }
@@ -224,9 +221,14 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   fill: ${Re};
 `,hm=$e.div`
   position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
   bottom: -2%;
   right: -2%;
-`,mm=({numeral:e,text:t,flipped:n})=>{const[r,i]=_e.useState(!1),o=_e.useCallback(l=>{l.button===0&&i(!r)},[r]);return b.jsx(fm,{selected:r,onMouseDown:o,children:b.jsx(pn,{children:b.jsxs(cr,{flipped:n,children:[b.jsx(cm,{children:t}),b.jsx(dm,{xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 150 100",children:b.jsx(pm,{x:"0",y:"-20%",textAnchor:"start",children:e})}),b.jsx(hm,{children:b.jsx(lm,{})})]})})})},vm=$e.div`
+`,mm=({numeral:e,text:t,flipped:n})=>{const[r,i]=_e.useState(!1),o=_e.useCallback(l=>{l.button===0&&i(!r)},[r]);return b.jsx(fm,{selected:r,onMouseDown:o,children:b.jsx(pn,{children:b.jsxs(cr,{$flipped:n,children:[b.jsx(cm,{children:t}),b.jsx(dm,{xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 150 100",children:b.jsx(pm,{x:"0",y:"-20%",textAnchor:"start",children:e})}),b.jsx(hm,{children:b.jsx(lm,{})})]})})})},vm=$e.div`
   display: flex;
   align-items: center;
   justify-content: center;
