@@ -135,6 +135,9 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
 
   ${e=>e.$flipped?an`
           transform: rotateY(180deg);
+          & > * {
+            transform: rotateY(180deg); /* Counteract the flip */
+          }
         `:an`
           transform: rotateY(0deg);
         `}
