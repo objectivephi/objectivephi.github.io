@@ -172,13 +172,14 @@ const FloorContainer = () => {
   });
 
   const generateNewCards = useCallback(() => {
-    const shuffledCards = shuffleArray(tarotCards.slice(0, 3)).map((card) => ({
+    const shuffledCards = shuffleArray(tarotCards);
+    const newSelectedCards = shuffledCards.slice(0, 3).map((card) => ({
       ...card,
       flipped: Math.random() < 0.2,
     }));
-    setKeyId(keyId + 1);
-    setCards(shuffledCards);
-  }, [keyId]);
+    setKeyId((prevKeyId) => prevKeyId + 1); // Increment keyId to re-render
+    setCards(newSelectedCards); // Set the new cards
+  }, []);
 
   const bind = useDrag(({ down, delta: [dx, dy] }) => {
     if (down) {
