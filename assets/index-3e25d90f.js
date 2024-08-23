@@ -232,7 +232,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   right: -2%;
 `,mm=ke.div`
   color: ${Te};
-  font-size: 14px;
+  font-size: 10px;
   text-align: right;
   display: flex;
   align-items: flex-end;
