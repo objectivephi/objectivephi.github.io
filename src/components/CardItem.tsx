@@ -215,7 +215,7 @@ const BeethovenHolder = styled.div`
 `;
 const TarotExplanation = styled.div`
   color: ${WHITE};
-  font-size: 14px;
+  font-size: 10px;
   text-align: right;
   display: flex;
   align-items: flex-end;
