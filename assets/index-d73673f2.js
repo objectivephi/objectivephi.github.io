@@ -54,6 +54,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         &:nth-child(${t+1}) {
           animation: ${rm} ${im(t)} linear infinite;
           transform-origin: right bottom;
+          backface-visibility: hidden; /* Improve rendering on mobile */
+          will-change: transform; /* Suggests that transform is likely to change */
         }
       `)}
   }
