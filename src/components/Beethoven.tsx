@@ -105,6 +105,8 @@ const BeethovenSVG = styled.svg`
         &:nth-child(${index + 1}) {
           animation: ${rotate} ${getAnimationDuration(index)} linear infinite;
           transform-origin: right bottom;
+          backface-visibility: hidden; /* Improve rendering on mobile */
+          will-change: transform; /* Suggests that transform is likely to change */
         }
       `
     )}
@@ -120,4 +122,5 @@ const Beethoven = () => {
     </BeethovenSVG>
   );
 };
+
 export default Beethoven;

@@ -110,32 +110,144 @@ const ShuffleButton = styled.button`
 type TarotCard = {
   numeral: string;
   name: string;
+  explanation: string;
+  flippedExplanation: string;
   flipped?: boolean;
 };
 
 let tarotCards: TarotCard[] = [
-  { numeral: "I", name: "The Magician" },
-  { numeral: "II", name: "The High Priestess" },
-  { numeral: "III", name: "The Empress" },
-  { numeral: "IV", name: "The Emperor" },
-  { numeral: "V", name: "The Hierophant" },
-  { numeral: "VI", name: "The Lovers" },
-  { numeral: "VII", name: "The Chariot" },
-  { numeral: "VIII", name: "Strength" },
-  { numeral: "IX", name: "The Hermit" },
-  { numeral: "X", name: "Wheel of Fortune" },
-  { numeral: "XI", name: "Justice" },
-  { numeral: "XII", name: "The Hanged Man" },
-  { numeral: "XIII", name: "Death" },
-  { numeral: "XIV", name: "Temperance" },
-  { numeral: "XV", name: "The Devil" },
-  { numeral: "XVI", name: "The Tower" },
-  { numeral: "XVII", name: "The Star" },
-  { numeral: "XVIII", name: "The Moon" },
-  { numeral: "XIX", name: "The Sun" },
-  { numeral: "XX", name: "Judgement" },
-  { numeral: "XXI", name: "The World" },
-  { numeral: "XXII", name: "The Fool" },
+  {
+    numeral: "I",
+    name: "The Magician",
+    explanation: "Manifestation and resourcefulness.",
+    flippedExplanation: "Manipulation, poor planning.",
+  },
+  {
+    numeral: "II",
+    name: "The High Priestess",
+    explanation: "Intuition and higher powers.",
+    flippedExplanation: "Hidden agendas, need to listen.",
+  },
+  {
+    numeral: "III",
+    name: "The Empress",
+    explanation: "Fertility, creation, abundance.",
+    flippedExplanation: "Creative block, dependence.",
+  },
+  {
+    numeral: "IV",
+    name: "The Emperor",
+    explanation: "Authority, structure, control.",
+    flippedExplanation: "Domination, excessive control.",
+  },
+  {
+    numeral: "V",
+    name: "The Hierophant",
+    explanation: "Spiritual wisdom, tradition.",
+    flippedExplanation: "Rebellion, subversiveness.",
+  },
+  {
+    numeral: "VI",
+    name: "The Lovers",
+    explanation: "Love, harmony, choices.",
+    flippedExplanation: "Disharmony, imbalance.",
+  },
+  {
+    numeral: "VII",
+    name: "The Chariot",
+    explanation: "Control, willpower, success.",
+    flippedExplanation: "Lack of control, aggression.",
+  },
+  {
+    numeral: "VIII",
+    name: "Strength",
+    explanation: "Courage, patience, compassion.",
+    flippedExplanation: "Self-doubt, weakness.",
+  },
+  {
+    numeral: "IX",
+    name: "The Hermit",
+    explanation: "Soul-searching, introspection.",
+    flippedExplanation: "Isolation, loneliness.",
+  },
+  {
+    numeral: "X",
+    name: "Wheel of Fortune",
+    explanation: "Luck, cycles, change.",
+    flippedExplanation: "Resistance to change, bad luck.",
+  },
+  {
+    numeral: "XI",
+    name: "Justice",
+    explanation: "Fairness, truth, law.",
+    flippedExplanation: "Unfairness, lack of accountability.",
+  },
+  {
+    numeral: "XII",
+    name: "The Hanged Man",
+    explanation: "Pause, surrender, new perspectives.",
+    flippedExplanation: "Delays, resistance, stalling.",
+  },
+  {
+    numeral: "XIII",
+    name: "Death",
+    explanation: "Endings, transformation, transition.",
+    flippedExplanation: "Resistance to change, personal transformation.",
+  },
+  {
+    numeral: "XIV",
+    name: "Temperance",
+    explanation: "Balance, moderation, patience.",
+    flippedExplanation: "Imbalance, excess, lack of long-term vision.",
+  },
+  {
+    numeral: "XV",
+    name: "The Devil",
+    explanation: "Bondage, addiction, materialism.",
+    flippedExplanation: "Freedom, release, restoring control.",
+  },
+  {
+    numeral: "XVI",
+    name: "The Tower",
+    explanation: "Sudden change, upheaval.",
+    flippedExplanation: "Avoidance of disaster, fear of change.",
+  },
+  {
+    numeral: "XVII",
+    name: "The Star",
+    explanation: "Hope, faith, purpose.",
+    flippedExplanation: "Lack of faith, despair.",
+  },
+  {
+    numeral: "XVIII",
+    name: "The Moon",
+    explanation: "Illusion, fear, anxiety.",
+    flippedExplanation: "Release of fear, repressed emotions.",
+  },
+  {
+    numeral: "XIX",
+    name: "The Sun",
+    explanation: "Positivity, fun, success.",
+    flippedExplanation: "Negativity, depression.",
+  },
+  {
+    numeral: "XX",
+    name: "Judgement",
+    explanation: "Judgement, rebirth, inner calling.",
+    flippedExplanation: "Self-doubt, refusal of self-examination.",
+  },
+  {
+    numeral: "XXI",
+    name: "The World",
+    explanation: "Completion, integration, accomplishment.",
+    flippedExplanation: "Lack of closure, incomplete goals.",
+  },
+  {
+    numeral: "XXII",
+    name: "The Fool",
+    explanation: "Beginnings, innocence, spontaneity.",
+    flippedExplanation: "Recklessness, risk-taking.",
+  },
 ];
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -212,9 +324,12 @@ const FloorContainer = () => {
               numeral={card.numeral}
               text={card.name}
               flipped={card.flipped}
+              explanation={card.explanation}
+              flippedExplanation={card.flippedExplanation}
             />
           ))}
         </CardContainer>
+
         <ShuffleButton onClick={generateNewCards}>Shuffle</ShuffleButton>
       </Floor>
     </Container>

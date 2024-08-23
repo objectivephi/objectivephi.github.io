@@ -100,10 +100,7 @@ const CardChild = styled.div<CardChildProps>`
   ${(props) =>
     props.$flipped
       ? css`
-          transform: rotateY(180deg);
-          & > * {
-            transform: rotateY(180deg); /* Counteract the flip */
-          }
+          transform: rotateY(180deg) rotateX(180deg);
         `
       : css`
           transform: rotateY(0deg);
@@ -216,14 +213,32 @@ const BeethovenHolder = styled.div`
   bottom: -2%;
   right: -2%;
 `;
+const TarotExplanation = styled.div`
+  color: ${WHITE};
+  font-size: 14px;
+  text-align: right;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+`;
 
 interface CardItemProps {
   numeral: string;
   text: string;
   flipped?: boolean;
+  explanation: string; // New prop for the explanation text
+  flippedExplanation: string;
 }
 
-const CardItem = ({ numeral, text, flipped }: CardItemProps) => {
+const CardItem = ({
+  numeral,
+  text,
+  flipped,
+  explanation,
+  flippedExplanation,
+}: CardItemProps) => {
   const [selected, setSelected] = useState(false);
 
   const handleClick = useCallback(
@@ -234,6 +249,8 @@ const CardItem = ({ numeral, text, flipped }: CardItemProps) => {
     },
     [selected]
   );
+
+  console.log(flipped);
 
   return (
     <CardHolder selected={selected} onMouseDown={handleClick}>
@@ -246,7 +263,13 @@ const CardItem = ({ numeral, text, flipped }: CardItemProps) => {
             </TarotNumeral>
           </TarotSVG>
           <BeethovenHolder>
-            <Beethoven />
+            {window.innerWidth <= 480 ? (
+              <TarotExplanation>
+                {flipped ? flippedExplanation : explanation}
+              </TarotExplanation>
+            ) : (
+              <Beethoven />
+            )}
           </BeethovenHolder>
         </CardChild>
       </Card>
