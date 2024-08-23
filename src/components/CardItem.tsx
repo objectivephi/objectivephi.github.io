@@ -101,6 +101,9 @@ const CardChild = styled.div<CardChildProps>`
     props.$flipped
       ? css`
           transform: rotateY(180deg);
+          & > * {
+            transform: rotateY(180deg); /* Counteract the flip */
+          }
         `
       : css`
           transform: rotateY(0deg);
